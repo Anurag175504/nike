@@ -6,22 +6,535 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
-    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>STEPPER | Premium Footwear</title>
+    <style>
+        :root {
+            --primary-color: #0B486B;
+            --secondary-color: #F56217;
+            --accent-color: #FF9A3C;
+            --light-color: #f8f9fa;
+            --dark-color: #212529;
+            --gray-color: #6c757d;
+            --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+        
+        body {
+            font-family: 'Poppins', system-ui, -apple-system, sans-serif;
+            overflow-x: hidden;
+            color: var(--dark-color);
+            line-height: 1.6;
+        }
+        
+        .hero-gradient {
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-gradient::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+            z-index: 1;
+        }
+        
+        .navbar {
+            box-shadow: 0 2px 30px rgba(0, 0, 0, 0.08);
+            background-color: rgba(255, 255, 255, 0.95) !important;
+            backdrop-filter: blur(10px);
+        }
+        
+        .navbar-brand {
+            font-weight: 800;
+            font-size: 1.8rem;
+            color: var(--primary-color) !important;
+            letter-spacing: -0.5px;
+        }
+        
+        .navbar-brand span {
+            color: var(--secondary-color);
+        }
+        
+        .nav-link {
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+            padding: 0.5rem 1rem !important;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 1rem;
+            width: 0;
+            height: 2px;
+            background: var(--secondary-color);
+            transition: var(--transition);
+        }
+        
+        .nav-link:hover::after {
+            width: calc(100% - 2rem);
+        }
+        
+        .nav-link:hover {
+            color: var(--secondary-color) !important;
+        }
+        
+        .hero-section {
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .hero-text {
+            animation: fadeInLeft 1s ease;
+            position: relative;
+            z-index: 3;
+        }
+        
+        .hero-title {
+            font-size: clamp(2.5rem, 5vw, 4.5rem);
+            font-weight: 800;
+            line-height: 1.2;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .hero-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 600px;
+        }
+        
+        .hero-video {
+            animation: fadeInRight 1s ease;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+            transition: var(--transition);
+            border-radius: 12px;
+            transform: perspective(1000px) rotateY(-5deg);
+            z-index: 2;
+        }
+        
+        .hero-video:hover {
+            transform: perspective(1000px) rotateY(-8deg) scale(1.03);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4);
+        }
+        
+        .section-title {
+            position: relative;
+            margin-bottom: 4rem;
+            color: var(--primary-color);
+            font-weight: 700;
+            font-size: 2.5rem;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--secondary-color), var(--primary-color));
+            border-radius: 2px;
+        }
+        
+        .product-card {
+            transition: var(--transition);
+            border: none !important;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            border-radius: 12px !important;
+            overflow: hidden;
+            background: white;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .product-img-container {
+            height: 220px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #f9f9f9, #f0f0f0);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .product-img {
+            height: 80%;
+            object-fit: contain;
+            transition: var(--transition);
+            filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.1));
+        }
+        
+        .product-card:hover .product-img {
+            transform: scale(1.1) rotate(5deg);
+        }
+        
+        .product-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--secondary-color);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            padding: 0.6rem 1.5rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transition: var(--transition);
+            border-radius: 8px;
+        }
+        
+        .btn-primary:hover {
+            background-color: #0a3a57;
+            border-color: #0a3a57;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(11, 72, 107, 0.3);
+        }
+        
+        .btn-outline-primary {
+            color: var(--primary-color);
+            border-color: var(--primary-color);
+            padding: 0.6rem 1.5rem;
+            font-weight: 600;
+            transition: var(--transition);
+            border-radius: 8px;
+        }
+        
+        .btn-outline-primary:hover {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(11, 72, 107, 0.3);
+        }
+        
+        .btn-accent {
+            background-color: var(--accent-color);
+            border-color: var(--accent-color);
+            color: white;
+            padding: 0.6rem 1.5rem;
+            font-weight: 600;
+            transition: var(--transition);
+            border-radius: 8px;
+        }
+        
+        .btn-accent:hover {
+            background-color: #e05515;
+            border-color: #e05515;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(245, 98, 23, 0.3);
+        }
+        
+        .footer {
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+            color: white;
+            padding: 4rem 0 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h30v30H0V0zm30 30h30v30H30V30z' fill='%23ffffff' fill-opacity='0.03' fill-rule='evenodd'/%3E%3C/svg%3E");
+            z-index: 1;
+        }
+        
+        .social-icons a {
+            color: white;
+            font-size: 1.2rem;
+            margin: 0 8px;
+            transition: var(--transition);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .social-icons a:hover {
+            color: white;
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        .feature-section {
+            background-color: var(--light-color);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .feature-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+            height: 100%;
+            border: 1px solid rgba(0, 0, 0, 0.03);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--secondary-color);
+            margin-bottom: 1.5rem;
+            transition: var(--transition);
+        }
+        
+        .feature-card:hover .feature-icon {
+            transform: scale(1.1);
+        }
+        
+        .newsletter {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 5rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .newsletter::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h30v30H0V0zm30 30h30v30H30V30z' fill='%23ffffff' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
+            z-index: 1;
+        }
+        
+        .newsletter .form-control {
+            height: 50px;
+            border-radius: 8px !important;
+            border: none;
+            padding-left: 20px;
+            box-shadow: none;
+        }
+        
+        .newsletter .btn {
+            height: 50px;
+            border-radius: 8px !important;
+            background-color: var(--accent-color);
+            border: none;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+        
+        .newsletter .btn:hover {
+            background-color: #e05515;
+            transform: translateY(-2px);
+        }
+        
+        .promo-section {
+            background: linear-gradient(135deg, #f9f9f9, #f0f0f0);
+        }
+        
+        .promo-video {
+            border-radius: 12px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
+            overflow: hidden;
+        }
+        
+        .promo-video:hover {
+            transform: scale(1.02);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.15);
+        }
+        
+        .feature-list-item {
+            margin-bottom: 1.5rem;
+            transition: var(--transition);
+        }
+        
+        .feature-list-item:hover {
+            transform: translateX(5px);
+        }
+        
+        .feature-list-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(245, 98, 23, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--secondary-color);
+            font-size: 1.2rem;
+            margin-right: 1rem;
+            flex-shrink: 0;
+        }
+        
+        .scroll-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--secondary-color);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            box-shadow: 0 5px 20px rgba(245, 98, 23, 0.3);
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+        
+        .scroll-top.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .scroll-top:hover {
+            background: var(--primary-color);
+            transform: translateY(-5px);
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 1199.98px) {
+            .hero-title {
+                font-size: clamp(2.2rem, 5vw, 3.5rem);
+            }
+        }
+        
+        @media (max-width: 991.98px) {
+            .hero-section {
+                min-height: auto;
+                padding: 5rem 0;
+            }
+            
+            .hero-video {
+                margin-top: 3rem;
+                transform: none !important;
+            }
+            
+            .hero-video:hover {
+                transform: none !important;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+        
+        @media (max-width: 767.98px) {
+            .navbar-brand {
+                font-size: 1.5rem;
+            }
+            
+            .hero-title {
+                font-size: 2.2rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .product-img-container {
+                height: 180px;
+            }
+            
+            .feature-card {
+                padding: 1.5rem;
+                margin-bottom: 1.5rem;
+            }
+        }
+        
+        @media (max-width: 575.98px) {
+            .hero-section {
+                padding: 4rem 0;
+                text-align: center;
+            }
+            
+            .hero-buttons {
+                justify-content: center !important;
+            }
+            
+            .hero-subtitle {
+                margin-left: auto;
+                margin-right: auto;
+            }
+            
+            .section-title {
+                font-size: 1.6rem;
+            }
+            
+            .newsletter {
+                padding: 3rem 0;
+            }
+        }
+    </style>
 </head>
-<style>
-    .sec-1{
-        background: #0B486B;  /* fallback for old browsers */
-background: -webkit-linear-gradient(to right, #F56217, #0B486B);  /* Chrome 10-25, Safari 5.1-6 */
-background: linear-gradient(to right, #F56217, #0B486B); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
-    }
-</style>
 
 <body>
-
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">Navbar</a>
+    <nav class="navbar navbar-expand-lg navbar-light sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-shoe-prints me-2"></i><span>STEP</span>PER
+            </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -30,166 +543,368 @@ background: linear-gradient(to right, #F56217, #0B486B); /* W3C, IE 10+/ Edge, F
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                      <a class="nav-link active" aria-current="page" href="#">Home</a>
-                        
+                        <a class="nav-link active" aria-current="page" href="#">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Link</a>
+                        <a class="nav-link" href="#">Products</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                             aria-expanded="false">
-                            Dropdown
+                            Categories
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Action</a></li>
-                            <li><a class="dropdown-item" href="#">Another action</a></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            <li><a class="dropdown-item" href="#">Running</a></li>
+                            <li><a class="dropdown-item" href="#">Casual</a></li>
+                            <li><a class="dropdown-item" href="#">Sports</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#">All Collections</a></li>
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+                        <a class="nav-link" href="#">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Contact</a>
                     </li>
                 </ul>
-                <form class="d-flex" role="search">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
-                </form>
+                <div class="d-flex align-items-center">
+                    <a href="#" class="nav-link me-3 position-relative">
+                        <i class="fas fa-heart"></i>
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                            3
+                        </span>
+                    </a>
+                    <a href="#" class="nav-link me-3 position-relative">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary">
+                            5
+                        </span>
+                    </a>
+                    <form class="d-flex" role="search">
+                        <div class="input-group">
+                            <input class="form-control border-end-0" type="search" placeholder="Search shoes..." aria-label="Search">
+                            <button class="btn btn-outline-primary border-start-0" type="submit">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </nav>
 
-    <div class="container-fluid bg-warning d-flex justify-content-evenly p-4 align-items-center">
-       <div>
-        <h1><b>The Perfect Shoe for Every </b></h1>
-        <h1><b>Individuality..</b></h1>
-       </div>
-        <video src="Nike_Running.mp4" width="550" class=" rounded border border-2 shadow-sm" autoplay muted loop></video>
-
-    </div>
-    <div>
-        <h1 class="d-flex justify-content-center m-4"><u><b>PRODUCTS</b></u></h1>
-    </div>
-
-    <div class="d-flex justify-content-center flex-wrap">
-        
-          <div class="card m-4 p-2" style="width: 18rem;">
-            <img src="1.png" class="card-img-top border border-2" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              <a href="#" class="btn btn-primary">Go somewhere</a>
+    <section class="hero-gradient">
+        <div class="container hero-section">
+            <div class="row align-items-center">
+                <div class="col-lg-6 hero-text">
+                    <h1 class="hero-title mb-4">Step Into <span class="text-warning">Comfort</span> & Style</h1>
+                    <p class="hero-subtitle mb-4">Discover our premium collection of footwear designed for comfort, style, and performance. Handcrafted with the finest materials for your everyday adventures.</p>
+                    <div class="d-flex gap-3 hero-buttons">
+                        <a href="#" class="btn btn-light btn-lg px-4">Shop Now</a>
+                        <a href="#" class="btn btn-outline-light btn-lg px-4">Explore</a>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <video src="Nike_Running.mp4" width="100%" class="hero-video" autoplay muted loop></video>
+                </div>
             </div>
-          </div>
-          <div class="card m-4 p-2" style="width: 18rem;">
-            <img src="1.png" class="card-img-top border border-2" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              <a href="#" class="btn btn-primary">Go somewhere</a>
-            </div>
-          </div>
-          <div class="card m-4 p-2" style="width: 18rem;">
-            <img src="3.png" class="card-img-top border border-2" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              <a href="#" class="btn btn-primary">Go somewhere</a>
-            </div>
-          </div>
-          <div class="card m-4 p-2" style="width: 18rem;">
-            <img src="3.png" class="card-img-top border border-2" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              <a href="#" class="btn btn-primary">Go somewhere</a>
-            </div>
-          </div>
-          <div class="card m-4 p-2" style="width: 18rem;">
-            <img src="3.png" class="card-img-top border border-2" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              <a href="#" class="btn btn-primary">Go somewhere</a>
-            </div>
-          </div>
-          <div class="card m-4 p-2" style="width: 18rem;">
-            <img src="3.png" class="card-img-top border border-2" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              <a href="#" class="btn btn-primary">Go somewhere</a>
-            </div>
-          </div>
-          <div class="card m-4 p-2" style="width: 18rem;">
-            <img src="3.png" class="card-img-top border border-2" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              <a href="#" class="btn btn-primary">Go somewhere</a>
-            </div>
-          </div>
-          <div class="card m-4 p-2" style="width: 18rem;">
-            <img src="3.png" class="card-img-top border border-2" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              <a href="#" class="btn btn-primary">Go somewhere</a>
-            </div>
-          </div>
-
-
-
-
-
-
-
-
-
-
-    </div>
-
-    <div class="container-fluid d-flex justify-content-evenly align-items-center p-4 bg-light">
-        <div>
-            <h1><b>START YOUR WEB DESIGN</b></h1>
         </div>
-        <div>
-            <video src="video_clip.mp4" width="550" class="shadow-sm rounded border border-2" autoplay muted loop ></video>
+    </section>
+
+    <section class="py-5 feature-section">
+        <div class="container py-5">
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-3">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-truck"></i>
+                        </div>
+                        <h4>Free Shipping</h4>
+                        <p class="text-muted">Enjoy free shipping on all orders over $50 with no hidden fees.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-exchange-alt"></i>
+                        </div>
+                        <h4>Easy Returns</h4>
+                        <p class="text-muted">30-day hassle-free return policy for all products.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-lock"></i>
+                        </div>
+                        <h4>Secure Payment</h4>
+                        <p class="text-muted">100% secure payment options with SSL encryption.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-headset"></i>
+                        </div>
+                        <h4>24/7 Support</h4>
+                        <p class="text-muted">Dedicated customer support team available round the clock.</p>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
+    </section>
 
-    <div class="container-fluid sec-1">
-      <div class="p-2 d-flex justify-content-center">
-        <h3>
-          SNIST FS&FA|ALL RIGHTS RESERVED
-        </h3>
-      </div>
+    <section class="py-5">
+        <div class="container py-5">
+            <h2 class="text-center section-title">OUR COLLECTION</h2>
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-4 col-xl-3">
+                    <div class="card product-card h-100">
+                        <div class="product-img-container">
+                            <span class="product-badge">New</span>
+                            <img src="1.png" class="product-img" alt="Running Shoe">
+                        </div>
+                        <div class="card-body">
+                            <div class="mb-3 text-warning">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                                <span class="ms-1 text-muted">(42)</span>
+                            </div>
+                            <h5 class="card-title">Nike Air Max 270</h5>
+                            <p class="card-text text-muted">Revolutionary air cushioning for maximum comfort.</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <span class="text-muted text-decoration-line-through me-2">$149.99</span>
+                                    <h5 class="mb-0 text-primary d-inline">$129.99</h5>
+                                </div>
+                                <a href="#" class="btn btn-sm btn-primary">Add to Cart</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4 col-xl-3">
+                    <div class="card product-card h-100">
+                        <div class="product-img-container">
+                            <span class="product-badge">Sale</span>
+                            <img src="1.png" class="product-img" alt="Casual Shoe">
+                        </div>
+                        <div class="card-body">
+                            <div class="mb-3 text-warning">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <span class="ms-1 text-muted">(36)</span>
+                            </div>
+                            <h5 class="card-title">Adidas Originals</h5>
+                            <p class="card-text text-muted">Classic casual shoes for everyday comfort.</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h5 class="mb-0 text-primary">$89.99</h5>
+                                <a href="#" class="btn btn-sm btn-primary">Add to Cart</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4 col-xl-3">
+                    <div class="card product-card h-100">
+                        <div class="product-img-container">
+                            <img src="3.png" class="product-img" alt="Basketball Shoe">
+                        </div>
+                        <div class="card-body">
+                            <div class="mb-3 text-warning">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <span class="ms-1 text-muted">(58)</span>
+                            </div>
+                            <h5 class="card-title">Jordan Retro 5</h5>
+                            <p class="card-text text-muted">High-performance basketball shoes with premium materials.</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h5 class="mb-0 text-primary">$149.99</h5>
+                                <a href="#" class="btn btn-sm btn-primary">Add to Cart</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4 col-xl-3">
+                    <div class="card product-card h-100">
+                        <div class="product-img-container">
+                            <span class="product-badge">Popular</span>
+                            <img src="3.png" class="product-img" alt="Training Shoe">
+                        </div>
+                        <div class="card-body">
+                            <div class="mb-3 text-warning">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                                <span class="ms-1 text-muted">(47)</span>
+                            </div>
+                            <h5 class="card-title">Puma Future Rider</h5>
+                            <p class="card-text text-muted">Versatile training shoes for gym and outdoor workouts.</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <span class="text-muted text-decoration-line-through me-2">$99.99</span>
+                                    <h5 class="mb-0 text-primary d-inline">$79.99</h5>
+                                </div>
+                                <a href="#" class="btn btn-sm btn-primary">Add to Cart</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-5">
+                <a href="#" class="btn btn-primary btn-lg px-5">View All Products</a>
+            </div>
+        </div>
+    </section>
 
+    <section class="py-5 promo-section">
+        <div class="container py-5">
+            <div class="row align-items-center">
+                <div class="col-lg-6 mb-5 mb-lg-0">
+                    <video src="video_clip.mp4" width="100%" class="promo-video" autoplay muted loop></video>
+                </div>
+                <div class="col-lg-6 ps-lg-5">
+                    <h2 class="mb-4">Engineered For Your <span class="text-primary">Performance</span></h2>
+                    <p class="lead mb-5">Our shoes are designed with cutting-edge technology to provide ultimate comfort and style for every step of your journey.</p>
+                    
+                    <div class="feature-list-item d-flex">
+                        <div class="feature-list-icon">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <div>
+                            <h5>Lightweight Design</h5>
+                            <p class="text-muted mb-0">Advanced materials reduce weight without compromising durability.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-list-item d-flex">
+                        <div class="feature-list-icon">
+                            <i class="fas fa-leaf"></i>
+                        </div>
+                        <div>
+                            <h5>Eco-Friendly Materials</h5>
+                            <p class="text-muted mb-0">Sustainable and recycled materials for a greener footprint.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-list-item d-flex">
+                        <div class="feature-list-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <div>
+                            <h5>Premium Durability</h5>
+                            <p class="text-muted mb-0">Reinforced construction for long-lasting performance.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    </div>
+    <section class="newsletter">
+        <div class="container position-relative" style="z-index: 2;">
+            <div class="row justify-content-center">
+                <div class="col-lg-8 text-center">
+                    <h2 class="mb-4">Join Our Community</h2>
+                    <p class="mb-5 lead">Subscribe to get exclusive offers, new product announcements, and style inspiration delivered to your inbox.</p>
+                    <form class="row g-2 justify-content-center">
+                        <div class="col-md-8">
+                            <input type="email" class="form-control" placeholder="Your Email Address">
+                        </div>
+                        <div class="col-md-4">
+                            <button type="submit" class="btn btn-dark w-100">Subscribe</button>
+                        </div>
+                    </form>
+                    <p class="mt-3 small">We respect your privacy. Unsubscribe at any time.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
+    <footer class="footer">
+        <div class="container position-relative" style="z-index: 2;">
+            <div class="row">
+                <div class="col-lg-4 mb-5 mb-lg-0">
+                    <h5 class="mb-4"><i class="fas fa-shoe-prints me-2"></i>STEPPER</h5>
+                    <p class="mb-4">Providing premium footwear since 2010. Our mission is to deliver comfort, style, and quality in every pair.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-pinterest"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-4 mb-md-0">
+                    <h5 class="mb-4">Shop</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#" class="text-white">Men's Shoes</a></li>
+                        <li class="mb-2"><a href="#" class="text-white">Women's Shoes</a></li>
+                        <li class="mb-2"><a href="#" class="text-white">Kids' Shoes</a></li>
+                        <li class="mb-2"><a href="#" class="text-white">New Arrivals</a></li>
+                        <li class="mb-2"><a href="#" class="text-white">Best Sellers</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-4 mb-md-0">
+                    <h5 class="mb-4">Support</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#" class="text-white">Contact Us</a></li>
+                        <li class="mb-2"><a href="#" class="text-white">FAQs</a></li>
+                        <li class="mb-2"><a href="#" class="text-white">Shipping</a></li>
+                        <li class="mb-2"><a href="#" class="text-white">Returns</a></li>
+                        <li class="mb-2"><a href="#" class="text-white">Size Guide</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 col-md-4">
+                    <h5 class="mb-4">Contact Info</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-3 d-flex align-items-start">
+                            <i class="fas fa-map-marker-alt me-3 mt-1"></i>
+                            <span> 123-snist ghatkesar</span>
+                        </li>
+                        <li class="mb-3 d-flex align-items-center">
+                            <i class="fas fa-phone me-3"></i>
+                            <span>+91 8179467666</span>
+                        </li>
+                        <li class="mb-3 d-flex align-items-center">
+                            <i class="fas fa-envelope me-3"></i>
+                            <span>anuragvarada@gmail.com</span>
+                        </li>
+                        <li class="d-flex align-items-center">
+                            <i class="fas fa-clock me-3"></i>
+                            <span>Mon-Fri: 9AM - 6PM IST</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-5 bg-light opacity-10">
+            <div class="row">
+                <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                    <p class="mb-0">© 2023 Stepper. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <img src="https://via.placeholder.com/300x50?text=Payment+Methods" alt="Payment Methods" class="img-fluid" style="height: 30px;">
+                </div>
+            </div>
+        </div>
+    </footer>
 
-
-
-
-    
-
-
-
-
-
-
-
-
-
-
+    <a href="#" class="scroll-top">
+        <i class="fas fa-arrow-up"></i>
+    </a>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
         crossorigin="anonymous"></script>
-</body>
-
-</html>
+        
+    <script
